@@ -7,33 +7,33 @@
         </div>
         <mu-list @change="handleListChange" :value="activeList">
           
-          <mu-list-item title="1" value="list1" >
+          <mu-list-item title="博文管理" value="list1" >
             <mu-icon slot="left" value="send" />
           </mu-list-item>
 
 
-          <mu-list-item title="2" value="list2">
+          <mu-list-item title="预留菜单1" value="list2">
             <mu-icon slot="left" value="drafts"/>
           </mu-list-item>
           
 
-          <mu-list-item title="3" toggleNested value="list3">
+          <mu-list-item title="预留菜单2" toggleNested value="list3">
             <mu-icon slot="left" value="inbox"/>
             
-            <mu-list-item slot="nested" title="3-1" value="list4">
+            <mu-list-item slot="nested" title="预留子菜单1" value="list4">
               <mu-icon slot="left" value="grade"/>
             </mu-list-item>
 
-            <mu-list-item slot="nested"  title="3-2" toggleNested value="list5" >
+            <mu-list-item slot="nested"  title="预留子菜单2" toggleNested value="list5" >
               <mu-icon slot="left" value="send"/>
-              <mu-list-item title="Drafts" slot="nested" value="list6">
+              <mu-list-item title="预留三级子菜单" slot="nested" value="list6">
                 <mu-icon slot="left" value="drafts"/>
               </mu-list-item>
             </mu-list-item>
 
-            <mu-list-item slot="nested" title="3-3" toggleNested value="list7">
+            <mu-list-item slot="nested" title="预留子菜单3" toggleNested value="list7">
               <mu-icon slot="left" value="inbox"/>
-              <mu-list-item title="Drafts" slot="nested" value="list8">
+              <mu-list-item title="预留三级子菜单" slot="nested" value="list8">
                 <mu-icon slot="left" value="drafts"/>
               </mu-list-item>
             </mu-list-item>
@@ -46,10 +46,7 @@
       <div class="content-right">
         
         <div class="body">
-          <mu-sub-header>阳光</mu-sub-header>
-          <mu-content-block>
-            散落在指尖的阳光，我试着轻轻抓住光影的踪迹，它却在眉宇间投下一片淡淡的阴影。调皮的阳光掀动了四月的心帘，温暖如约的歌声渐起。似乎在诉说着，我也可以在漆黑的角落里，找到阴影背后的阳光，找到阳光与阴影奏出和谐的旋律。我要用一颗敏感赤诚的心迎接每一缕滑过指尖的阳光！
-          </mu-content-block>
+          <BlogList></BlogList>
         </div>
         <div class="footer">
           Copyright © CodeSheep 2017-2018
@@ -58,7 +55,11 @@
     </div>
   </div>
 </template>
+
 <script>
+
+import BlogList from './BlogList';
+
 export default {
   data () {
     return {
@@ -73,9 +74,14 @@ export default {
     handleListChange (val) {
       this.activeList = val
     }
+  },
+  components:{
+    BlogList
   }
 }
+
 </script>
+
 
 <style scoped>
 
