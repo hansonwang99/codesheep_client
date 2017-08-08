@@ -12,12 +12,13 @@
         <mu-th>操作</mu-th>
       </mu-tr>
     </mu-thead>
+
     <mu-tbody>
-      <mu-tr>
-        <mu-td>1</mu-td>
-        <mu-td>John SmithJohnJohn SmithJohnJohn SmithJohnJohn SmithJohn </mu-td>
-        <mu-td>Employed</mu-td>
-        <mu-td>John Smith</mu-td>
+      <mu-tr v-for="item,index in tableData"  :key="index" >
+        <mu-td>{{index + 1}}</mu-td>
+        <mu-td>{{item.name}}</mu-td>
+        <mu-td>{{item.category}}</mu-td>
+        <mu-td>{{item.tag}}</mu-td>
         <mu-td><a >修改</a></mu-td>
       </mu-tr>
     </mu-tbody>
@@ -30,11 +31,64 @@
 
 <script>
 export default {
+  data() {
+    return {
+
+        page:1,  
+        pagesize:10,       // 每页显示的数目
+        pageTotalNum:10,   // 总的页数目
+        tableData: [
+          {
+            name: 'John Smith John Smith John Smith',
+            category: 'Java',
+            tag: 'Java'
+          },
+          {
+            name: 'John Smith John Smith John Smith',
+            category: 'Java',
+            tag: 'Java'
+          }
+        ]
+
+    }
+
+  },
   methods: {
+
     unselect () {
       this.$refs.table.unSelectAll()
+    },
+
+    getArticles() {
+
+      alert("fffff");
+
+      var _this = this;
+      _this.$http.get('/api/article/getall'
+      ,{
+        params:{
+          page:_this.page,
+        }, 
+      }
+      )
+      .then(function (response) {
+          alert("xxxx");
+      })
+
+      alert("yyyy");
     }
+
+
+
+
+
+  },
+  mounted() {
+
+      this.getArticles();
+
   }
+
 }
 </script>
 
