@@ -75,6 +75,9 @@ export default {
     handleListChange (val) {
       this.activeList = val
     }
+  },
+  mounted(){
+      this.$router.push({ path: '/welcome' });
   }
 
 }
