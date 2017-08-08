@@ -7,7 +7,7 @@
         </div>
         <mu-list @change="handleListChange" :value="activeList">
           
-          <mu-list-item title="博文管理" value="list1" >
+          <mu-list-item title="博文管理" value="list1" to="/bloglist"  >
             <mu-icon slot="left" value="send" />
           </mu-list-item>
 
@@ -40,27 +40,28 @@
 
           </mu-list-item>
 
-
         </mu-list>
       </div>
+
+
       <div class="content-right">
-        
         <div class="body">
-          <BlogList></BlogList>
+          <router-view></router-view>
         </div>
+
         <div class="footer">
           Copyright © CodeSheep 2017-2018
         </div>
       </div>
+
     </div>
   </div>
 </template>
 
 <script>
 
-import BlogList from './BlogList';
-
 export default {
+
   data () {
     return {
       activeTab: 'tab1',
@@ -74,10 +75,8 @@ export default {
     handleListChange (val) {
       this.activeList = val
     }
-  },
-  components:{
-    BlogList
   }
+
 }
 
 </script>
