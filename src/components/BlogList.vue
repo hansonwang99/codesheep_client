@@ -25,6 +25,11 @@
 
   </mu-table>
 
+  <div v-show="isShow" class="blogPagination">
+    <mu-pagination :total="total" :current="current" @pageChange="handleClick">
+    </mu-pagination>
+  </div>
+
 </div>
 </template>
 
@@ -34,10 +39,12 @@ export default {
   data() {
     return {
 
-        page:1,            // 当前页数
-        pageSize:10,       // 每页显示的数目
-        pageTotalNum:10,   // 总的页数目
-        tableData: []
+        current:1,          // 当前页数
+        pageSize:10,        // 每页显示的数目
+        total:10,           // 总的页数目
+        totalItemNum:9,     // 总的博客条目
+        tableData: [],
+        isShow: false       // 默认分页组件不显示，仅当总的博客条目数大于等于10的时候才显示
     }
 
   },
@@ -60,15 +67,20 @@ export default {
       .then(function (response) {
           // console.log(response.data[0].articles)  // console.log用于调试效果挺好
           _this.tableData=response.data[0].articles;
-          _this.pageTotalNum = parseInt(response.data[0].pageTotalNum);
+          _this.total = parseInt(response.data[0].pageTotalNum);
           _this.pageSize = parseInt(response.data[0].pageSize);
-          _this.page = parseInt(response.data[0].page);
+          _this.current = parseInt(response.data[0].page);
+
+          if (_this.totalItemNum>=10) {
+            _this.isShow = true;
+          }
       })
 
+    },
+
+    handleClick (newIndex) {
+      
     }
-
-
-
 
 
   },
@@ -86,6 +98,10 @@ export default {
 
 .layout .content-right .bloglist .mu-table{
   table-layout: auto;
+}
+
+.blogPagination {
+  padding-top: 20px;
 }
 
 </style>
