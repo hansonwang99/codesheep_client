@@ -37,19 +37,7 @@ export default {
         page:1,  
         pagesize:10,       // 每页显示的数目
         pageTotalNum:10,   // 总的页数目
-        tableData: [
-          {
-            name: 'John Smith John Smith John Smith',
-            category: 'Java',
-            tag: 'Java'
-          },
-          {
-            name: 'John Smith John Smith John Smith',
-            category: 'Java',
-            tag: 'Java'
-          }
-        ]
-
+        tableData: []
     }
 
   },
@@ -61,21 +49,18 @@ export default {
 
     getArticles() {
 
-      alert("fffff");
-
       var _this = this;
-      _this.$http.get('/api/article/getall'
+      _this.$http.get('http://localhost:3000/getallarticle'
       ,{
         params:{
-          page:_this.page,
+          
         }, 
       }
       )
       .then(function (response) {
-          alert("xxxx");
+          _this.tableData=response.data;
       })
 
-      alert("yyyy");
     }
 
 

@@ -1,0 +1,10 @@
+{
+  "getallarticle": [
+    { "name": "第一篇文章的标题", "category": "Java学习", "tag": "java" },
+    { "name": "第二篇文章的标题", "category": "Python学习", "tag": "Python" }
+  ],
+  "comments": [
+    { "id": 1, "body": "some comment", "postId": 1 }
+  ],
+  "profile": { "name": "typicode" }
+}
