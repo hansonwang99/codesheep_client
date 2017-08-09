@@ -34,8 +34,8 @@ export default {
   data() {
     return {
 
-        page:1,  
-        pagesize:10,       // 每页显示的数目
+        page:1,            // 当前页数
+        pageSize:10,       // 每页显示的数目
         pageTotalNum:10,   // 总的页数目
         tableData: []
     }
@@ -58,7 +58,11 @@ export default {
       }
       )
       .then(function (response) {
-          _this.tableData=response.data;
+          // console.log(response.data[0].articles)  // console.log用于调试效果挺好
+          _this.tableData=response.data[0].articles;
+          _this.pageTotalNum = parseInt(response.data[0].pageTotalNum);
+          _this.pageSize = parseInt(response.data[0].pageSize);
+          _this.page = parseInt(response.data[0].page);
       })
 
     }
