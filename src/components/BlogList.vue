@@ -19,7 +19,10 @@
         <mu-td>{{item.name}}</mu-td>
         <mu-td>{{item.category}}</mu-td>
         <mu-td>{{item.tag}}</mu-td>
-        <mu-td><a >修改</a></mu-td>
+        <mu-td>
+            <mu-float-button icon="edit" mini  @click="openWork" />
+            <mu-float-button icon="delete" mini @click="openWork" />
+        </mu-td>
       </mu-tr>
     </mu-tbody>
 
@@ -42,7 +45,7 @@ export default {
         current:1,          // 当前页数
         pageSize:10,        // 每页显示的数目
         total:10,           // 总的页数目
-        totalItemNum:9,     // 总的博客条目
+        totalItemNum:10,     // 总的博客条目
         tableData: [],
         isShow: false       // 默认分页组件不显示，仅当总的博客条目数大于等于10的时候才显示
     }
@@ -79,8 +82,12 @@ export default {
     },
 
     handleClick (newIndex) {
-      
-    }
+      alert("change pagination index");
+    },
+
+    openWork () { 
+      alert("click float button");
+    },
 
 
   },
