@@ -20,7 +20,7 @@
         <mu-td>{{item.category}}</mu-td>
         <mu-td>{{item.tag}}</mu-td>
         <mu-td>
-            <mu-float-button icon="edit" mini  @click="openWork" />
+            <mu-float-button icon="edit" mini  @click="openWork" data-toggle="modal" data-target="#postModal" />
             <mu-float-button icon="delete" mini @click="openWork" />
         </mu-td>
       </mu-tr>
@@ -32,6 +32,59 @@
     <mu-pagination :total="total" :current="current" @pageChange="handleClick">
     </mu-pagination>
   </div>
+  
+  
+  <div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-labelledby="postModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-editor">
+            <div class="modal-content" id="savaArticlePage">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">写文章</h4>
+                </div>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="postTitle">标题</label>
+                                <input type="text" class="form-control" id="postTitle" v-model="title"/>
+                                <input type="hidden" name="" id="postId"/>
+                                <input type="hidden" name="" id="postContent"/>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="postCategory">分类</label>
+                                <select id="postCategory" class="form-control">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="postTag">标签</label>
+                                <input type="text" class="form-control" id="postTag" v-model="tag"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <iframe id="postContentIframe" src="" name="postContentIframe" frameborder="0" width="100%" height="620" scrolling="no"></iframe>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button v-on:click="savaarticle" type="button" class="btn btn-primary" id="savePost">保存</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+  
 
 </div>
 </template>
