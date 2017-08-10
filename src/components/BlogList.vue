@@ -83,7 +83,7 @@
 
             </div>
         </div>
-    </div>
+  </div>
   
 
 </div>
@@ -135,11 +135,13 @@ export default {
     },
 
     handleClick (newIndex) {
-      alert("change pagination index");
+      // alert("change pagination index");
     },
 
     openWork () { 
-      alert("click float button");
+      // alert("click float button");
+
+      document.getElementById('postContentIframe').src="../../static/write.html";
     },
 
 
@@ -147,6 +149,8 @@ export default {
   mounted() {
 
       this.getArticles();
+
+      
 
   }
 
