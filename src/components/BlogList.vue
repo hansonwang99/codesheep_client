@@ -21,7 +21,7 @@
         <mu-td>{{item.tag}}</mu-td>
         <mu-td>
             <mu-float-button icon="edit" mini  @click="openWork" data-toggle="modal" data-target="#postModal" />
-            <mu-float-button icon="delete" mini @click="openWork" />
+            <mu-float-button icon="delete" mini @click="openDelDialog" />
         </mu-td>
       </mu-tr>
     </mu-tbody>
@@ -84,6 +84,12 @@
             </div>
         </div>
   </div>
+
+  <mu-dialog class="delDialog" :open="deleteDialog" title="CodeSheep温馨提示！" @close="closeDelDialog">
+    确定要删除该篇文章吗？
+    <mu-flat-button slot="actions" @click="closeDelDialog" primary label="取消"/>
+    <mu-flat-button slot="actions" primary @click="closeDelDialog" label="确定"/>
+  </mu-dialog>
   
 
 </div>
@@ -92,6 +98,7 @@
 
 <script>
 export default {
+
   data() {
     return {
 
@@ -100,10 +107,13 @@ export default {
         total:10,           // 总的页数目
         totalItemNum:10,     // 总的博客条目
         tableData: [],
-        isShow: false       // 默认分页组件不显示，仅当总的博客条目数大于等于10的时候才显示
+        isShow: false,       // 默认分页组件不显示，仅当总的博客条目数大于等于10的时候才显示
+
+        deleteDialog: false
     }
 
   },
+
   methods: {
 
     unselect () {
@@ -135,23 +145,25 @@ export default {
     },
 
     handleClick (newIndex) {
-      // alert("change pagination index");
     },
 
     openWork () { 
-      // alert("click float button");
-
       document.getElementById('postContentIframe').src="../../static/write.html";
     },
 
+    openDelDialog () {
+      this.deleteDialog = true;
+    },
+
+    closeDelDialog () {
+      this.deleteDialog = false;
+    }
+
 
   },
+
   mounted() {
-
       this.getArticles();
-
-      
-
   }
 
 }
@@ -166,6 +178,10 @@ export default {
 
 .blogPagination {
   padding-top: 20px;
+}
+
+.mu-dialog {
+  width: 25%;
 }
 
 </style>
