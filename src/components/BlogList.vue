@@ -184,4 +184,13 @@ export default {
   width: 25%;
 }
 
+.mu-float-button-mini {
+    width: 30px;
+    height: 30px;
+}
+
+.mu-icon {
+  font-size: 18px;
+}
+
 </style>
