@@ -177,7 +177,7 @@ export default {
 }
 
 .blogPagination {
-  padding-top: 20px;
+  padding-top: 10px;
 }
 
 .mu-dialog {
@@ -193,4 +193,7 @@ export default {
   font-size: 18px;
 }
 
+.mu-pagination-item {
+  font-size: 14px;
+}
 </style>
