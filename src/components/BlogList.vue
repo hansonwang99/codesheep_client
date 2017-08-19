@@ -1,7 +1,7 @@
 <template>
 <div class="bloglist" >
   
-  <mu-table multiSelectable enableSelectAll ref="table" :showCheckbox="true">
+  <mu-table class="blogtable" multiSelectable enableSelectAll ref="table" :showCheckbox="true">
     
     <mu-thead>
       <mu-tr>
@@ -14,8 +14,8 @@
     </mu-thead>
 
     <mu-tbody>
-      <mu-tr v-for="item,index in tableData"  :key="index" >
-        <mu-td>{{index + 1}}</mu-td>
+      <mu-tr v-for="item,index in tableData" :key="index" >
+        <mu-td>{{index + 10*(current-1)+1}}</mu-td>
         <mu-td>{{item.name}}</mu-td>
         <mu-td>{{item.category}}</mu-td>
         <mu-td>{{item.tag}}</mu-td>
@@ -123,19 +123,19 @@ export default {
     getArticles() {
 
       var _this = this;
-      _this.$http.get('http://localhost:3000/getallarticle'
+      _this.$http.get('https://easy-mock.com/mock/598eb2fea1d30433d85f00f1/codesheep/article/backgetarticlelist/page/1'
       ,{
         params:{
-          
-        }, 
+          // page: 1
+        },
       }
       )
       .then(function (response) {
-          // console.log(response.data[0].articles)  // console.log用于调试效果挺好
-          _this.tableData=response.data[0].articles;
-          _this.total = parseInt(response.data[0].pageTotalNum);
-          _this.pageSize = parseInt(response.data[0].pageSize);
-          _this.current = parseInt(response.data[0].page);
+          // console.log(response.data.articles)  // console.log用于调试效果挺好
+          _this.tableData=response.data.articles;
+          _this.total = parseInt(response.data.pageTotalNum);
+          _this.pageSize = parseInt(response.data.pageSize);
+          _this.current = parseInt(response.data.page);
 
           if (_this.totalItemNum>=10) {
             _this.isShow = true;
@@ -145,6 +145,21 @@ export default {
     },
 
     handleClick (newIndex) {
+      var _this = this;
+      var url='https://easy-mock.com/mock/598eb2fea1d30433d85f00f1/codesheep/article/backgetarticlelist/page/'
+      url=url+newIndex
+
+      _this.$http.get(url).then(function (response) {
+
+          _this.tableData=response.data.articles;
+          _this.total = parseInt(response.data.pageTotalNum);
+          _this.pageSize = parseInt(response.data.pageSize);
+          _this.current = parseInt(response.data.page);
+
+          if (_this.totalItemNum>=10) {
+            _this.isShow = true;
+          }
+      })
     },
 
     openWork () { 
@@ -158,7 +173,6 @@ export default {
     closeDelDialog () {
       this.deleteDialog = false;
     }
-
 
   },
 
@@ -176,8 +190,16 @@ export default {
   table-layout: auto;
 }
 
-.blogPagination {
-  padding-top: 10px;
+.body{
+  height: 80%;
+}
+
+.blogtable{
+  height: 85%;
+}
+
+.bloglist{
+  height: 100%;
 }
 
 .mu-dialog {
@@ -194,6 +216,6 @@ export default {
 }
 
 .mu-pagination-item {
-  font-size: 14px;
+  font-size: 13px;
 }
 </style>
