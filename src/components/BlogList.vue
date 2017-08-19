@@ -14,12 +14,12 @@
     </mu-thead>
 
     <mu-tbody>
-      <mu-tr v-for="item,index in tableData" :key="index" >
+      <mu-tr v-for="item,index in tableData" :key="index">
         <mu-td>{{index + 10*(current-1)+1}}</mu-td>
         <mu-td>{{item.name}}</mu-td>
         <mu-td>{{item.category}}</mu-td>
         <mu-td>{{item.tag}}</mu-td>
-        <mu-td>
+        <mu-td @click="clickOperationTd(index)">
             <mu-float-button icon="edit" mini  @click="openWork" data-toggle="modal" data-target="#postModal" />
             <mu-float-button icon="delete" mini @click="openDelDialog" />
         </mu-td>
@@ -162,7 +162,7 @@ export default {
       })
     },
 
-    openWork () { 
+    openWork () {
       document.getElementById('postContentIframe').src="../../static/write.html";
     },
 
@@ -172,6 +172,21 @@ export default {
 
     closeDelDialog () {
       this.deleteDialog = false;
+    },
+
+    clickOperationTd(index) {
+      var _this = this
+      var url='https://easy-mock.com/mock/598eb2fea1d30433d85f00f1/codesheep/article/backgetdetail/id/'
+      url+=_this.tableData[index].id
+      _this.$http.get(url).then(function (response) {
+
+          var id = response.data.id
+          var title = response.data.title
+          var tag = response.data.tag
+          var categoryName = response.data.categoryName
+          var content=response.data.content
+          document.getElementById('postContent').value=content
+      })
     }
 
   },

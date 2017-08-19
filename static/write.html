@@ -17,7 +17,7 @@
 </head>
 <body>
     <div id="editormd">
-                <textarea style="display:none;" v-model="content">
+                <textarea style="display:none;" v-model="content" id="editorTextArea">
                 </textarea>
     </div>
 
@@ -40,7 +40,7 @@
             imageUploadURL : "/admin/imgUp",
             onload: function(){
                 var postId = $('#postId', parent.document).val();
-                if(postId){
+                if(1){
                     this.setMarkdown($('#postContent', parent.document).val());
                 } else {
                     this.setMarkdown('');
