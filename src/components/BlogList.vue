@@ -128,7 +128,7 @@ export default {
       _this.$http.get('/backadmin/articlelist/my/0'
       ,{
         params:{
-          page: 0
+          page: 1
         },
       }
       )
