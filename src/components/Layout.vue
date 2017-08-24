@@ -12,12 +12,12 @@
           </mu-list-item>
 
 
-          <mu-list-item title="预留菜单1" value="list2">
+          <mu-list-item title="留言管理" value="list2">
             <mu-icon slot="left" value="drafts"/>
           </mu-list-item>
           
 
-          <mu-list-item title="预留菜单2" toggleNested value="list3">
+          <mu-list-item title="预留菜单" toggleNested value="list3">
             <mu-icon slot="left" value="inbox"/>
             
             <mu-list-item slot="nested" title="预留子菜单1" value="list4">

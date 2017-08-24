@@ -16,8 +16,8 @@
     <mu-tbody>
       <mu-tr v-for="item,index in tableData" :key="index">
         <mu-td>{{index + 10*(current-1)+1}}</mu-td>
-        <mu-td>{{item.name}}</mu-td>
-        <mu-td>{{item.category}}</mu-td>
+        <mu-td>{{item.title}}</mu-td>
+        <mu-td>{{item.categoryName}}</mu-td>
         <mu-td>{{item.tag}}</mu-td>
         <mu-td @click="clickOperationTd(index)">
             <mu-float-button icon="edit" mini  @click="openWork" data-toggle="modal" data-target="#postModal" />
@@ -122,11 +122,13 @@ export default {
 
     getArticles() {
 
+      // /backadmin/articlelist/my/0'
+      // https://easy-mock.com/mock/598eb2fea1d30433d85f00f1/codesheep/article/backgetarticlelist/page/1
       var _this = this;
-      _this.$http.get('https://easy-mock.com/mock/598eb2fea1d30433d85f00f1/codesheep/article/backgetarticlelist/page/1'
+      _this.$http.get('/backadmin/articlelist/my/0'
       ,{
         params:{
-          // page: 1
+          page: 0
         },
       }
       )
@@ -145,11 +147,18 @@ export default {
     },
 
     handleClick (newIndex) {
+      // https://easy-mock.com/mock/598eb2fea1d30433d85f00f1/codesheep/article/backgetarticlelist/page/
       var _this = this;
-      var url='https://easy-mock.com/mock/598eb2fea1d30433d85f00f1/codesheep/article/backgetarticlelist/page/'
-      url=url+newIndex
+      var url='/backadmin/articlelist/my/0'
+      // url=url+newIndex
 
-      _this.$http.get(url).then(function (response) {
+      _this.$http.get(url
+      ,{
+        params:{
+          page: newIndex
+        },
+      }
+      ).then(function (response) {
 
           _this.tableData=response.data.articles;
           _this.total = parseInt(response.data.pageTotalNum);
