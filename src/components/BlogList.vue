@@ -109,7 +109,10 @@ export default {
         tableData: [],
         isShow: false,       // 默认分页组件不显示，仅当总的博客条目数大于等于10的时候才显示
 
-        deleteDialog: false
+        deleteDialog: false,
+
+        title: '',
+        tag: ''
     }
 
   },
@@ -184,14 +187,21 @@ export default {
     },
 
     clickOperationTd(index) {
+      // https://easy-mock.com/mock/598eb2fea1d30433d85f00f1/codesheep/article/backgetdetail/id/
       var _this = this
-      var url='https://easy-mock.com/mock/598eb2fea1d30433d85f00f1/codesheep/article/backgetdetail/id/'
-      url+=_this.tableData[index].id
-      _this.$http.get(url).then(function (response) {
+      var url='/backadmin/article'
+      // url+=_this.tableData[index].id
+      _this.$http.get(url,
+      {
+        params:{
+          id: _this.tableData[index].id
+        },
+      }
+      ).then(function (response) {
 
           var id = response.data.id
-          var title = response.data.title
-          var tag = response.data.tag
+          _this.title = response.data.title
+          _this.tag = response.data.tag
           var categoryName = response.data.categoryName
           var content=response.data.content
           document.getElementById('postContent').value=content
