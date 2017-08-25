@@ -81,7 +81,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    <button v-on:click="savaarticle" type="button" class="btn btn-primary" id="savePost">保存</button>
+                    <button v-on:click="saveModifyArticle" type="button" class="btn btn-primary" id="savePost">保存</button>
                 </div>
 
             </div>
@@ -114,8 +114,13 @@ export default {
 
         deleteDialog: false,
 
+        id: 0,
         title: '',
         tag: '',
+        categoryId: 0,
+        categoryName: '',
+        content: '',
+
         selected: '',
         options: []
     }
@@ -151,11 +156,11 @@ export default {
 
       _this.$http.get('/backadmin/getCategory').then(function (response) {
         var categoryList = response.data
-        console.log(categoryList)
+        // console.log(categoryList)
         for( var i=0; i<categoryList.length; i++ ) {
           _this.options.push({text:categoryList[i].name,value:categoryList[i].id})
         }
-        console.log(_this.options)
+        // console.log(_this.options)
       })
 
     },
@@ -206,11 +211,39 @@ export default {
         },
       }
       ).then(function (response) {
+          _this.id = response.data.id
           _this.title = response.data.title
           _this.tag = response.data.tag
+          _this.categoryId = response.data.categoryId
+          _this.categoryName = response.data.categoryName
+          _this.content = response.data.content
           _this.selected = response.data.categoryId
           document.getElementById('postContent').value = response.data.content
       })
+    },
+
+    saveModifyArticle() {
+
+      var _this = this;
+      var article = {
+        id: _this.id,
+        title: _this.title,
+        tag: _this.tag,
+        categoryId: _this.categoryId,
+        categoryName: _this.categoryName,
+        content: _this.content,
+      };
+      console.log(article);
+      this.$http.post('/backadmin/modifyarticle',{article}).then(function (response) {
+        if(response.data.rspCode == '000000'){
+          alert("保存成功")
+        }else{
+          alert("保存失败")
+        }
+      }, function(response){
+          console.log('error');
+      })
+    
     }
 
   },
