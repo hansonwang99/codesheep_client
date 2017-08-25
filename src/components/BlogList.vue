@@ -57,7 +57,10 @@
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label for="postCategory">分类</label>
-                                <select id="postCategory" class="form-control">
+                                <select v-model="selected" id="postCategory" class="form-control">
+                                  <option v-for="option in options" v-bind:value="option.value">
+                                    {{ option.text }}
+                                  </option>
                                 </select>
                             </div>
                         </div>
@@ -112,7 +115,9 @@ export default {
         deleteDialog: false,
 
         title: '',
-        tag: ''
+        tag: '',
+        selected: '',
+        options: []
     }
 
   },
@@ -124,9 +129,6 @@ export default {
     },
 
     getArticles() {
-
-      // /backadmin/articlelist/my/0'
-      // https://easy-mock.com/mock/598eb2fea1d30433d85f00f1/codesheep/article/backgetarticlelist/page/1
       var _this = this;
       _this.$http.get('/backadmin/articlelist/my/0'
       ,{
@@ -147,13 +149,20 @@ export default {
           }
       })
 
+      _this.$http.get('/backadmin/getCategory').then(function (response) {
+        var categoryList = response.data
+        console.log(categoryList)
+        for( var i=0; i<categoryList.length; i++ ) {
+          _this.options.push({text:categoryList[i].name,value:categoryList[i].id})
+        }
+        console.log(_this.options)
+      })
+
     },
 
     handleClick (newIndex) {
-      // https://easy-mock.com/mock/598eb2fea1d30433d85f00f1/codesheep/article/backgetarticlelist/page/
       var _this = this;
       var url='/backadmin/articlelist/my/0'
-      // url=url+newIndex
 
       _this.$http.get(url
       ,{
@@ -187,10 +196,9 @@ export default {
     },
 
     clickOperationTd(index) {
-      // https://easy-mock.com/mock/598eb2fea1d30433d85f00f1/codesheep/article/backgetdetail/id/
       var _this = this
       var url='/backadmin/article'
-      // url+=_this.tableData[index].id
+      
       _this.$http.get(url,
       {
         params:{
@@ -198,13 +206,10 @@ export default {
         },
       }
       ).then(function (response) {
-
-          var id = response.data.id
           _this.title = response.data.title
           _this.tag = response.data.tag
-          var categoryName = response.data.categoryName
-          var content=response.data.content
-          document.getElementById('postContent').value=content
+          _this.selected = response.data.categoryId
+          document.getElementById('postContent').value = response.data.content
       })
     }
 
