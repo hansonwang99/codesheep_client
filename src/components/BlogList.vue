@@ -100,6 +100,9 @@
 
 
 <script>
+
+import Qs from 'qs'
+
 export default {
 
   data() {
@@ -225,16 +228,20 @@ export default {
     saveModifyArticle() {
 
       var _this = this;
-      var article = {
+      var datas = Qs.stringify({
         id: _this.id,
         title: _this.title,
         tag: _this.tag,
         categoryId: _this.categoryId,
         categoryName: _this.categoryName,
         content: _this.content,
-      };
-      console.log(article);
-      this.$http.post('/backadmin/modifyarticle',{article}).then(function (response) {
+      });
+      console.log(datas);
+      this.$http.post('/backadmin/modifyarticle',datas, {
+                      headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                      }
+                  }).then(function (response) {
         if(response.data.rspCode == '000000'){
           alert("保存成功")
         }else{
