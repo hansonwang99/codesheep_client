@@ -16,9 +16,9 @@
     <mu-tbody>
       <mu-tr v-for="item,index in tableData" :key="index">
         <mu-td>{{index + 10*(current-1)+1}}</mu-td>
-        <mu-td>{{item.title}}</mu-td>
-        <mu-td>{{item.categoryName}}</mu-td>
-        <mu-td>{{item.tag}}</mu-td>
+        <mu-td v-bind:id="tableData[index].id+'_title'">{{item.title}}</mu-td>
+        <mu-td v-bind:id="tableData[index].id+'_category'">{{item.categoryName}}</mu-td>
+        <mu-td v-bind:id="tableData[index].id+'_tag'">{{item.tag}}</mu-td>
         <mu-td @click="clickOperationTd(index)">
             <mu-float-button icon="edit" mini  @click="openWork" data-toggle="modal" data-target="#postModal" />
             <mu-float-button icon="delete" mini @click="openDelDialog" />
@@ -94,6 +94,7 @@
     <mu-flat-button slot="actions" primary @click="closeDelDialog" label="确定"/>
   </mu-dialog>
   
+  <input type="hidden" name="" id="indexTag"/>
 
 </div>
 </template>
@@ -205,6 +206,7 @@ export default {
 
     clickOperationTd(index) {
       var _this = this
+      document.getElementById('indexTag').value = _this.tableData[index].id // 将id放入一个hidden的input中
       var url='/backadmin/article'
       
       _this.$http.get(url,
@@ -234,22 +236,30 @@ export default {
         id: _this.id,
         title: _this.title,
         tag: _this.tag,
-        categoryId: _this.categoryId,
-        categoryName: _this.categoryName,
+        categoryId: _this.selected,
+        categoryName: _this.options.find(item => item.value === _this.selected)['text'],
         content: content,
       });
-      console.log(datas);
+      // console.log(datas);
       this.$http.post('/backadmin/modifyarticle',datas, {
                       headers: {
                             'Content-Type': 'application/x-www-form-urlencoded'
                       }
                   }).then(function (response) {
         if(response.data.rspCode == '000000'){
-          alert("保存成功")
+          // alert("保存成功")
+          var idTemp = document.getElementById('indexTag').value + '_title'
+          var categoryTemp = document.getElementById('indexTag').value + '_category'
+          var tagTemp = document.getElementById('indexTag').value + '_tag'
+          
+          document.getElementById(idTemp).innerHTML = _this.title
+          document.getElementById(categoryTemp).innerHTML = _this.options.find(item => item.value === _this.selected)['text']
+          document.getElementById(tagTemp).innerHTML = _this.tag
+
         }else{
           alert("保存失败")
         }
-        $("#postModal").modal("hide");
+        $("#postModal").modal("hide"); // 隐藏弹出式modal框
       }, function(response){
           console.log('error');
       })
