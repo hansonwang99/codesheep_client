@@ -228,13 +228,15 @@ export default {
     saveModifyArticle() {
 
       var _this = this;
+      var editorContentArea = $(window.frames["postContentIframe"].document).find("#editormd>textarea");
+      var content = editorContentArea.val();
       var datas = Qs.stringify({
         id: _this.id,
         title: _this.title,
         tag: _this.tag,
         categoryId: _this.categoryId,
         categoryName: _this.categoryName,
-        content: _this.content,
+        content: content,
       });
       console.log(datas);
       this.$http.post('/backadmin/modifyarticle',datas, {
@@ -247,6 +249,7 @@ export default {
         }else{
           alert("保存失败")
         }
+        $("#postModal").modal("hide");
       }, function(response){
           console.log('error');
       })
