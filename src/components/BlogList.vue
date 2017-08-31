@@ -96,6 +96,13 @@
   
   <input type="hidden" name="" id="indexTag"/>
 
+  <mu-popup position="top" :overlay="true" popupClass="demo-popup-top" :open="topPopupModify">
+    修改成功
+  </mu-popup>
+  <mu-popup position="top" :overlay="false" popupClass="demo-popup-top" :open="topPopupDel">
+    删除成功
+  </mu-popup>
+
 </div>
 </template>
 
@@ -128,7 +135,9 @@ export default {
         selected: '',
         options: [],
 
-        deleteIndex: -1
+        deleteIndex: -1,
+        topPopupModify: false,
+        topPopupDel: false
     }
 
   },
@@ -221,6 +230,7 @@ export default {
       ).then(function (response) {
         if(response.data.rspCode == '000000'){
           _this.deleteDialog = false
+          _this.topPopupDel = true
           _this.$http.get('/backadmin/articlelist/my/0'
           ,{
             params:{
@@ -293,7 +303,7 @@ export default {
           document.getElementById(idTemp).innerHTML = _this.title
           document.getElementById(categoryTemp).innerHTML = _this.options.find(item => item.value === _this.selected)['text']
           document.getElementById(tagTemp).innerHTML = _this.tag
-
+          _this.topPopupModify = true
         }else{
           alert("保存失败")
         }
@@ -308,6 +318,24 @@ export default {
 
   mounted() {
       this.getArticles();
+  },
+
+  watch: {
+    topPopupModify (val) {
+      if (val) {
+        setTimeout(() => {
+          this.topPopupModify = false
+        }, 1500)
+      }
+    },
+
+    topPopupDel (val) {
+      if (val) {
+        setTimeout(() => {
+          this.topPopupDel = false
+        }, 1500)
+      }
+    }
   }
 
 }
@@ -347,5 +375,16 @@ export default {
 
 .mu-pagination-item {
   font-size: 13px;
+}
+
+.demo-popup-top {
+  width: 100%;
+  opacity: .8;
+  height: 48px;
+  line-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 375px;
 }
 </style>
