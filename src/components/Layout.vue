@@ -11,33 +11,12 @@
             <mu-icon slot="left" value="send" />
           </mu-list-item>
 
-
-          <mu-list-item title="留言管理" value="list2">
-            <mu-icon slot="left" value="drafts"/>
+		  <mu-list-item title="个人信息管理" value="list2">
+            <mu-icon slot="left" value="people"/>
           </mu-list-item>
-          
 
-          <mu-list-item title="预留菜单" toggleNested value="list3">
-            <mu-icon slot="left" value="inbox"/>
-            
-            <mu-list-item slot="nested" title="预留子菜单1" value="list4">
-              <mu-icon slot="left" value="grade"/>
-            </mu-list-item>
-
-            <mu-list-item slot="nested"  title="预留子菜单2" toggleNested value="list5" >
-              <mu-icon slot="left" value="send"/>
-              <mu-list-item title="预留三级子菜单" slot="nested" value="list6">
-                <mu-icon slot="left" value="drafts"/>
-              </mu-list-item>
-            </mu-list-item>
-
-            <mu-list-item slot="nested" title="预留子菜单3" toggleNested value="list7">
-              <mu-icon slot="left" value="inbox"/>
-              <mu-list-item title="预留三级子菜单" slot="nested" value="list8">
-                <mu-icon slot="left" value="drafts"/>
-              </mu-list-item>
-            </mu-list-item>
-
+          <mu-list-item title="留言管理" value="list3">
+            <mu-icon slot="left" value="drafts"/>
           </mu-list-item>
 
         </mu-list>
@@ -49,6 +28,11 @@
           <router-view></router-view>
         </div>
 
+		<mu-breadcrumb style="font-size:16px;margin-top:20px;" separator="●">
+          <mu-breadcrumb-item href="/home">回到首页</mu-breadcrumb-item>
+          <mu-breadcrumb-item href="//">免责声明</mu-breadcrumb-item>    
+        </mu-breadcrumb>
+		
         <div class="footer">
           Copyright © CodeSheep 2017-2018
         </div>
