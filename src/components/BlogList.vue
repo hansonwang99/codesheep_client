@@ -21,7 +21,7 @@
         <mu-td v-bind:id="tableData[index].id+'_tag'">{{item.tag}}</mu-td>
         <mu-td @click="clickOperationTd(index)">
             <mu-float-button icon="edit" mini  @click="openWork" data-toggle="modal" data-target="#postModal" />
-            <mu-float-button icon="delete" mini @click="openDelDialog" />
+            <mu-float-button icon="delete" mini @click="openDelDialog(index)" />
         </mu-td>
       </mu-tr>
     </mu-tbody>
@@ -91,7 +91,7 @@
   <mu-dialog class="delDialog" :open="deleteDialog" title="CodeSheep温馨提示！" @close="closeDelDialog">
     确定要删除该篇文章吗？
     <mu-flat-button slot="actions" @click="closeDelDialog" primary label="取消"/>
-    <mu-flat-button slot="actions" primary @click="closeDelDialog" label="确定"/>
+    <mu-flat-button slot="actions" primary @click="confirmDelete" label="确定"/>
   </mu-dialog>
   
   <input type="hidden" name="" id="indexTag"/>
@@ -126,7 +126,9 @@ export default {
         content: '',
 
         selected: '',
-        options: []
+        options: [],
+
+        deleteIndex: -1
     }
 
   },
@@ -196,12 +198,48 @@ export default {
       document.getElementById('postContentIframe').src="../../static/write.html";
     },
 
-    openDelDialog () {
+    openDelDialog (index) {
+      // alert(index)
+      this.deleteIndex = index
       this.deleteDialog = true;
     },
 
     closeDelDialog () {
       this.deleteDialog = false;
+    },
+
+    confirmDelete() {
+      var _this = this
+      var url='/backadmin/delete'
+      _this.$http.get(
+        url,
+        {
+          params: {
+            id: _this.tableData[_this.deleteIndex].id
+          },
+        }
+      ).then(function (response) {
+        if(response.data.rspCode == '000000'){
+          _this.deleteDialog = false
+          _this.$http.get('/backadmin/articlelist/my/0'
+          ,{
+            params:{
+              page: _this.current
+            },
+          }).then(function (response) {
+            _this.tableData = response.data.articles;
+            _this.total = parseInt(response.data.pageTotalNum);
+            _this.pageSize = parseInt(response.data.pageSize);
+            _this.current = parseInt(response.data.page);
+
+            if (_this.totalItemNum>=10) {
+              _this.isShow = true;
+            }
+          })
+        }else{
+          alert("删除失败")
+        }
+      })
     },
 
     clickOperationTd(index) {
